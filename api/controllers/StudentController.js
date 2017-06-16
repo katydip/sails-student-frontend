@@ -19,11 +19,13 @@ module.exports = {
         if(req.method != "POST"){
           return res.view('create');
         }
+        //if I didn't request this page with a post, go back to the create page
 
         var args = {
             data: req.body,
             headers: { "Content-Type": "application/json" }
         };
+        //otherwise, get the data from the form.. so we can post.
 
         client.post(endpoint, args, function (data, response) {
             // return res.view('create', {success: { message: "Record added successfully"}});
@@ -34,7 +36,8 @@ module.exports = {
 
             req.addFlash("success", "Record created successfully");
             return res.redirect('/create');
-
+//this addFlash (built into sails) adds a temporary variable to display on the page then if you refresh it goes away
+//then if it was created take me back to the create page and display the created successfully message
         })
 
   },
@@ -52,43 +55,50 @@ module.exports = {
     });
 
   },
-
+//this is making a get request to my data that is up there. we are
+//returning a view - the read view, and then we make an opject with (views directory)
+//students as the key, and data that came back is the data. if there is
+//an error we get back this error read message.
+//you hit the slash route our routes.js page tells us to go to that controller and use that method.
+//'read' is a file name, read.ejs.
 
    /**
    * `StudentController.update()`
    */
-  update: function (req, res) {
+   update: function (req, res) {
 
-    if(req.method != "POST"){
+       if(req.method != "POST"){
 
-      client.get(endpoint, function (data, response) {
-        return res.view('update', {students: data});
-      }).on('error', function (err) {
-          return res.view('update', {error: { message: "There was an error getting the students"}});
-      });
+         client.get(endpoint, function (data, response) {
+           return res.view('update', {students: data});
+         }).on('error', function (err) {
+             return res.view('update', {error: { message: "There was an error getting the students"}});
+         });
 
-    }else{
+       }else{
 
-      var args = {
-          data: req.body,
-          headers: { "Content-Type": "application/json" }
-      };
+         let studentId = req.body.student_id;
+         delete req.body.student_id;
 
-      client.put(endpoint + "/" + req.body.id, args, function (data, response) {
+         var args = {
+             data: req.body,
+             headers: { "Content-Type": "application/json" }
+         };
 
-        if(response.statusCode != "200"){
-            req.addFlash("error", data.message);
-            return res.redirect('/update');
-        }
+         client.put(endpoint + "/" + studentId, args, function (data, response) {
 
-        req.addFlash("success", "Record updated successfully");
-        return res.redirect('/update');
+           if(response.statusCode != "200"){
+               req.addFlash("error", data.message);
+               return res.redirect('/update');
+           }
 
-      })
+           req.addFlash("success", "Record updated successfully");
+           return res.redirect('/update');
 
-    }
-  },
+         })
 
+       }
+     },
   /**
    * `StudentController.delete()`
    */

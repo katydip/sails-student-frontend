@@ -6,21 +6,21 @@
  *
  * Here's what this you will need to do:
  *
- * 1. Inlclude the following DataTables css in layout.ejs
+ * x1. Include the following DataTables css in layout.ejs
  *    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.12/b-1.2.2/b-print-1.2.2/cr-1.3.2/datatables.min.css"/>
  *
- * 2. Include the following DataTables JavaScript in layout.ejs
+ * x2. Include the following DataTables JavaScript in layout.ejs
  *    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/cr-1.3.2/datatables.min.js"></script>
  *
- * 3. Using the DataTables plugin render the table on the page as a DataTable
+ * x3. Using the DataTables plugin render the table on the page as a DataTable
  *
- * 4. Use the buttons extention to enable the copy, csv, excel, pdf, and print
+ * x4. Use the buttons extention to enable the copy, csv, excel, pdf, and print
  *
- * 5. Use the colReorder Plugin to add the ability to reorder columns
+ * x5. Use the colReorder Plugin to add the ability to reorder columns
  *
- * 6. The table should be able to scroll horizontal
+ * x6. The table should be able to scroll horizontal
  *
- * 7. Use any other features you find interesting
+ * 7. Use any other features you find interesting - come back to this. 
  *
  * Here's the documentation you need:
  * https://datatables.net/
@@ -35,6 +35,20 @@
    $(function(){
 
    	//code goes here
+
+    $('#studentTable').DataTable(
+      {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        colReorder: true,
+        "scrollX": true
+
+    } );
+
+
+
 
    })
 

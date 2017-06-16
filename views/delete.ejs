@@ -13,10 +13,12 @@
   <form action="/delete" method="POST">
     <div class="form-group">
       <label for="student_id">SELECT A STUDENT TO DELETE</label><br/>
-      <select id="student_id" name="student_id">
+      <!-- https://silviomoreto.github.io/bootstrap-select/examples/#custom-button-text -->
+<!-- adding title= below creates a placeholder on button, adding data header creates the drop down so it is searchable -->
+      <select id="student_id" name="student_id" title="Choose a student:" data-header="Select a student:">
       <% if(typeof students != "undefined" && students.length > 0){ %>
         <% students.forEach(function(student){ %>
-          <option value="<%= student.student_id %>">
+          <option data-icon="glyphicon glyphicon-user" value="<%= student.student_id %>">
             <%= student.last_name + ", " +  student.first_name %>
           </option>
         <% }) %>
